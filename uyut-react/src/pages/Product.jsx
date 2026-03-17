@@ -8,7 +8,6 @@ function Product() {
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [selectedImage, setSelectedImage] = useState(0);
-    const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState("description");
 
     // Похожие товары
@@ -32,7 +31,6 @@ function Product() {
         
         // Сброс состояния при смене товара
         setSelectedImage(0);
-        setQuantity(1);
         setActiveTab("description");
         
         // Скролл наверх при открытии
@@ -111,24 +109,6 @@ function Product() {
         return specs[product?.category] || [];
     };
 
-    // Функция для увеличения количества
-    const increaseQuantity = () => {
-        setQuantity(prev => prev + 1);
-    };
-
-    // Функция для уменьшения количества
-    const decreaseQuantity = () => {
-        if (quantity > 1) {
-            setQuantity(prev => prev - 1);
-        }
-    };
-
-    // Функция для добавления в корзину
-    const addToCart = () => {
-        // Здесь будет логика добавления в корзину
-        alert(`Товар "${product.name}" в количестве ${quantity} шт. добавлен в корзину`);
-    };
-
     // Создаем массив из 4 одинаковых изображений (для галереи)
     const productImages = product ? [
         product.image,
@@ -151,7 +131,6 @@ function Product() {
 
     return (
         <div className="product-page">
-            {/* Хлебные крошки */}
             <div className="product-breadcrumbs">
                 <div className="container">
                     <a href="/">Главная</a> / <a href="/catalog">Каталог</a> / <span>{product.name}</span>
@@ -159,7 +138,6 @@ function Product() {
             </div>
 
             <div className="product-main container">
-                {/* Левая колонка - изображения */}
                 <div className="product-gallery">
                     <div className="product-main-image">
                         <img src={productImages[selectedImage]} alt={product.name} />
@@ -180,7 +158,6 @@ function Product() {
                     </div>
                 </div>
 
-                {/* Правая колонка - информация */}
                 <div className="product-info">
                     <span className="product-category-label">
                         {product.category === "chair" ? "Стулья" : 
@@ -192,21 +169,14 @@ function Product() {
                     <h1 className="product-title-large">{product.name}</h1>
                     
                     <div className="product-rating">
-                        <div className="stars">
-                            ★★★★★
-                        </div>
+                        <div className="stars">★★★★★</div>
                         <span className="rating-count">12 отзывов</span>
                     </div>
 
-                    <div className="product-price-large">
-                        {product.price} ₽
-                    </div>
+                    <div className="product-price-large">{product.price} ₽</div>
 
-                    <p className="product-short-desc">
-                        {description}
-                    </p>
+                    <p className="product-short-desc">{description}</p>
 
-                    {/* Характеристики кратко */}
                     <div className="product-specs-mini">
                         <div className="spec-item">
                             <span className="spec-label">Материал:</span>
@@ -222,22 +192,6 @@ function Product() {
                         </div>
                     </div>
 
-                    {/* Количество и кнопка */}
-                    <div className="product-actions">
-                        <div className="quantity-selector">
-                            <button onClick={decreaseQuantity} className="quantity-btn">−</button>
-                            <span className="quantity-value">{quantity}</span>
-                            <button onClick={increaseQuantity} className="quantity-btn">+</button>
-                        </div>
-                        <button className="add-to-cart-btn" onClick={addToCart}>
-                            <span>Добавить в корзину</span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
-                            </svg>
-                        </button>
-                    </div>
-
-                    {/* Дополнительная информация */}
                     <div className="product-meta">
                         <div className="meta-item">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -257,33 +211,12 @@ function Product() {
                 </div>
             </div>
 
-            {/* Вкладки с подробной информацией */}
             <div className="product-tabs container">
                 <div className="tabs-header">
-                    <button 
-                        className={activeTab === 'description' ? 'active' : ''} 
-                        onClick={() => setActiveTab('description')}
-                    >
-                        Описание
-                    </button>
-                    <button 
-                        className={activeTab === 'specifications' ? 'active' : ''} 
-                        onClick={() => setActiveTab('specifications')}
-                    >
-                        Характеристики
-                    </button>
-                    <button 
-                        className={activeTab === 'delivery' ? 'active' : ''} 
-                        onClick={() => setActiveTab('delivery')}
-                    >
-                        Доставка и оплата
-                    </button>
-                    <button 
-                        className={activeTab === 'reviews' ? 'active' : ''} 
-                        onClick={() => setActiveTab('reviews')}
-                    >
-                        Отзывы (12)
-                    </button>
+                    <button className={activeTab === 'description' ? 'active' : ''} onClick={() => setActiveTab('description')}>Описание</button>
+                    <button className={activeTab === 'specifications' ? 'active' : ''} onClick={() => setActiveTab('specifications')}>Характеристики</button>
+                    <button className={activeTab === 'delivery' ? 'active' : ''} onClick={() => setActiveTab('delivery')}>Доставка и оплата</button>
+                    <button className={activeTab === 'reviews' ? 'active' : ''} onClick={() => setActiveTab('reviews')}>Отзывы (12)</button>
                 </div>
 
                 <div className="tabs-content">
@@ -291,8 +224,7 @@ function Product() {
                         <div className="tab-pane description-tab">
                             <div className="description-text">
                                 <p>{description}</p>
-                                <p>Каждое изделие проходит тщательный контроль качества. Мы используем только проверенные материалы и современные технологии обработки дерева. Наша мебель создается с заботой о вашем комфорте и здоровье.</p>
-                                <p>Натуральное дерево сохраняет свою текстуру и рисунок, что делает каждое изделие уникальным. Покрытие безопасным маслом подчеркивает красоту древесины и защищает ее от внешних воздействий.</p>
+                                <p>Каждое изделие проходит тщательный контроль качества. Натуральное дерево делает каждое изделие уникальным.</p>
                             </div>
                         </div>
                     )}
@@ -316,16 +248,8 @@ function Product() {
                         <div className="tab-pane delivery-tab">
                             <h3>Способы доставки</h3>
                             <ul>
-                                <li>Курьером по Москве — 500 ₽ (1-2 дня)</li>
-                                <li>Самовывоз из шоурума — бесплатно</li>
-                                <li>Доставка по России — от 1500 ₽ (5-10 дней)</li>
-                            </ul>
-                            
-                            <h3>Способы оплаты</h3>
-                            <ul>
-                                <li>Наличными курьеру</li>
-                                <li>Банковской картой онлайн</li>
-                                <li>Безналичный расчет для юридических лиц</li>
+                                <li>Курьером по Москве — 500 ₽</li>
+                                <li>Самовывоз — бесплатно</li>
                             </ul>
                         </div>
                     )}
@@ -338,30 +262,14 @@ function Product() {
                                     <span className="review-date">12 марта 2026</span>
                                 </div>
                                 <div className="review-rating">★★★★★</div>
-                                <p className="review-text">Отличный {product.category === "chair" ? "стул" : 
-                                                                   product.category === "table" ? "стол" : 
-                                                                   product.category === "sofa" ? "диван" :
-                                                                   product.category === "bed" ? "кровать" :
-                                                                   product.category === "wardrobe" ? "шкаф" : "полка"}! 
-                                   Очень удобный, качество сборки на высоте. Дерево красивое, без сучков. Доставка быстрая. Спасибо!</p>
+                                <p className="review-text">Отличное качество сборки, дерево очень красивое!</p>
                             </div>
-                            
-                            <div className="review">
-                                <div className="review-header">
-                                    <span className="review-author">Михаил</span>
-                                    <span className="review-date">5 марта 2026</span>
-                                </div>
-                                <div className="review-rating">★★★★★</div>
-                                <p className="review-text">Покупал в новую квартиру. Прекрасно вписался в интерьер, очень доволен. Массив дерева выглядит солидно. Рекомендую!</p>
-                            </div>
-                            
                             <button className="review-btn">Оставить отзыв</button>
                         </div>
                     )}
                 </div>
             </div>
 
-            {/* Похожие товары */}
             {relatedProducts.length > 0 && (
                 <div className="related-products container">
                     <h2 className="related-title">Похожие товары</h2>

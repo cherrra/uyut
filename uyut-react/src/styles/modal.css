@@ -1,0 +1,129 @@
+/* src/styles/modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 51, 46, 0.8); /* Темно-зеленый полупрозрачный фон */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease;
+}
+
+.modal-content {
+  background: #faf9f7;
+  width: 90%;
+  max-width: 500px;
+  padding: 60px 50px;
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+  animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #1a332e;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+.modal-close:hover {
+  opacity: 1;
+}
+
+.modal-tag {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: #7ec4ae;
+  display: block;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.modal-title {
+  font-size: 32px;
+  font-weight: 300;
+  color: #1a332e;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.modal-subtitle {
+  font-size: 14px;
+  color: #5b736b;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group input, 
+.input-group textarea {
+  width: 100%;
+  padding: 15px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(26, 51, 46, 0.2);
+  font-family: inherit;
+  font-size: 15px;
+  color: #1a332e;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus, 
+.input-group textarea:focus {
+  border-bottom-color: #7ec4ae;
+}
+
+.modal-submit-btn {
+  width: 100%;
+  background: #1a332e;
+  color: white;
+  border: none;
+  padding: 18px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s;
+  border-radius: 2px;
+}
+
+.modal-submit-btn:hover {
+  background: #7ec4ae;
+  color: #1a332e;
+}
+
+.modal-footer-text {
+  font-size: 11px;
+  color: #999;
+  text-align: center;
+  margin-top: 25px;
+  line-height: 1.4;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}

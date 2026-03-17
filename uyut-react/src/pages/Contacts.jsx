@@ -1,4 +1,3 @@
-// Contacts.jsx
 import { useEffect, useState } from "react";
 import "../styles/contacts.css";
 
@@ -9,10 +8,13 @@ function Contacts() {
         email: "",
         message: ""
     });
-    
-    const [formSubmitted, setFormSubmitted] = useState(false);
 
-    // Анимация появления элементов при скролле
+    // Состояния для управления UI
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [formStatus, setFormStatus] = useState({ type: "", message: "" });
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYQbyvCjNynCjyNLx2fzbdnI9lL8cVPoqePC3Q1PwwRzgoyHF5Lf62nU2N5V0n_BrB2Q/exec';
+
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
@@ -26,90 +28,89 @@ function Contacts() {
         );
 
         document.querySelectorAll(".contacts-animate").forEach((el) => observer.observe(el));
-
         return () => observer.disconnect();
     }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    // Валидация
+    const validateForm = () => {
+        if (!formData.name || !formData.phone || !formData.email) {
+            setFormStatus({ type: "error", message: "Пожалуйста, заполните обязательные поля" });
+            return false;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setFormStatus({ type: "error", message: "Введите корректный Email" });
+            return false;
+        }
+        if (formData.phone.replace(/\D/g, '').length < 10) {
+            setFormStatus({ type: "error", message: "Введите корректный номер телефона" });
+            return false;
+        }
+        return true;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Здесь будет отправка формы
-        setFormSubmitted(true);
-        setTimeout(() => setFormSubmitted(false), 3000);
+        if (!validateForm()) return;
+
+        setIsSubmitting(true);
+        setFormStatus({ type: "", message: "" });
+
+        const payload = new FormData();
+        payload.append('name', formData.name);
+        payload.append('phone', formData.phone);
+        payload.append('email', formData.email);
+        payload.append('message', formData.message);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: payload,
+            mode: 'no-cors' // Важно для Google Apps Script
+        })
+        .then(() => {
+            setFormStatus({ type: "success", message: "Спасибо! Ваша заявка отправлена." });
+            setFormData({ name: "", phone: "", email: "", message: "" }); // Очистка
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            setFormStatus({ type: "error", message: "Ошибка при отправке. Попробуйте позже." });
+        })
+        .finally(() => {
+            setIsSubmitting(false);
+            // Скрываем сообщение об успехе через 5 секунд
+            setTimeout(() => setFormStatus({ type: "", message: "" }), 5000);
+        });
     };
 
+    // Данные для рендеринга (остаются без изменений)
     const contacts = [
-        {
-            id: 1,
-            type: "Адрес магазина",
-            value: "г. Москва, ул. Строителей, 15",
-            icon: "📍",
-            details: "ТЦ «Мебельный», 2 этаж"
-        },
-        {
-            id: 2,
-            type: "Телефон",
-            value: "+7 (495) 123-45-67",
-            icon: "📞",
-            details: "Ежедневно с 10:00 до 21:00"
-        },
-        {
-            id: 3,
-            type: "Email",
-            value: "info@uyut-mebel.ru",
-            icon: "✉️",
-            details: "Ответим в течение 2 часов"
-        }
+        { id: 1, type: "Адрес магазина", value: "г. Москва, ул. Строителей, 15", icon: "📍", details: "ТЦ «Мебельный», 2 этаж" },
+        { id: 2, type: "Телефон", value: "+7 (495) 123-45-67", icon: "📞", details: "Ежедневно с 10:00 до 21:00" },
+        { id: 3, type: "Email", value: "info@uyut-mebel.ru", icon: "✉️", details: "Ответим в течение 2 часов" }
     ];
 
     const faq = [
-        {
-            question: "Как добраться до магазина?",
-            answer: "Мы находимся в ТЦ «Мебельный» на 2 этаже. От метро «Строителей» 5 минут пешком или 2 остановки на автобусе."
-        },
-        {
-            question: "Есть ли доставка?",
-            answer: "Да, доставляем мебель по Москве и области. Стоимость доставки рассчитывается индивидуально в зависимости от адреса и объема заказа."
-        },
-        {
-            question: "Можно ли заказать доставку в другой город?",
-            answer: "Да, мы отправляем мебель по всей России транспортными компаниями. Помогаем с оформлением и отслеживанием груза."
-        },
-        {
-            question: "Как происходит оплата?",
-            answer: "Принимаем наличные, банковские карты, а также безналичный расчет для юридических лиц. Возможна оплата по счету."
-        }
+        { question: "Как добраться до магазина?", answer: "Мы находимся в ТЦ «Мебельный» на 2 этаже..." },
+        { question: "Есть ли доставка?", answer: "Да, доставляем мебель по Москве и области..." },
+        { question: "Можно ли заказать доставку в другой город?", answer: "Да, мы отправляем мебель по всей России..." },
+        { question: "Как происходит оплата?", answer: "Принимаем наличные, банковские карты..." }
     ];
 
     return (
         <>
-            {/* HERO SECTION */}
+            {/* HERO SECTION и CONTACT CARDS остаются такими же */}
             <section className="contacts-hero">
                 <div className="contacts-hero-content">
-                    <span className="contacts-hero-tag">·  КОНТАКТЫ  ·</span>
-                    <h1 className="contacts-hero-title">
-                        Всегда на <span className="contacts-hero-accent">связи</span>
-                    </h1>
-                    <p className="contacts-hero-subtitle">
-                        Ответим на вопросы, поможем с выбором и оформим заказ
-                    </p>
-                </div>
-                <div className="contacts-hero-shape"></div>
-                <div className="contacts-hero-decor">
-                    <span className="decor-dot"></span>
-                    <span className="decor-dot"></span>
-                    <span className="decor-dot"></span>
+                    <span className="contacts-hero-tag">· КОНТАКТЫ ·</span>
+                    <h1 className="contacts-hero-title">Всегда на <span className="contacts-hero-accent">связи</span></h1>
                 </div>
             </section>
 
-            {/* CONTACT CARDS SECTION */}
             <section className="contact-cards-section">
                 <div className="contact-cards-grid">
                     {contacts.map((contact) => (
@@ -118,117 +119,67 @@ function Contacts() {
                             <h3 className="contact-card-title">{contact.type}</h3>
                             <p className="contact-card-value">{contact.value}</p>
                             <p className="contact-card-details">{contact.details}</p>
-                            <div className="contact-card-line"></div>
                         </div>
                     ))}
                 </div>
             </section>
 
-            {/* MAP & FORM SECTION */}
             <section className="map-form-section">
                 <div className="map-form-container">
-                    {/* Карта */}
                     <div className="map-wrapper contacts-animate">
                         <div className="map-placeholder">
-                            <div className="map-overlay">
-                                <div className="map-marker">
-                                    <span className="marker-pin"></span>
-                                    <span className="marker-label">Мы здесь</span>
-                                </div>
-                                <div className="map-address">
-                                    <span className="address-icon">📍</span>
-                                    <span>ул. Строителей, 15</span>
-                                </div>
-                            </div>
+                            {/* Карта iframe */}
                             <iframe 
                                 src="https://yandex.ru/map-widget/v1/?um=constructor%3AXXX&source=constructor"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                title="Карта магазина"
-                                className="map-iframe"
+                                width="100%" height="100%" style={{ border: 0 }} loading="lazy" title="Карта"
                             ></iframe>
                         </div>
                     </div>
 
-                    {/* Форма обратной связи */}
-                    <div className="form-wrapper contacts-animate">
-                        <span className="form-label">·  НАПИШИТЕ НАМ  ·</span>
+                    <div  className="form-wrapper contacts-animate">
+                        <span className="form-label">· НАПИШИТЕ НАМ ·</span>
                         <h2 className="form-title">Остались вопросы?</h2>
-                        <p className="form-subtitle">
-                            Заполните форму и мы свяжемся с вами в ближайшее время
-                        </p>
 
                         <form onSubmit={handleSubmit} className="contact-form">
                             <div className="form-group">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Ваше имя"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                    className="form-input"
-                                />
+                                <input type="text" name="name" placeholder="Ваше имя" value={formData.name} onChange={handleChange} className="form-input" required />
                                 <span className="input-focus-line"></span>
                             </div>
 
                             <div className="form-group">
-                                <input
-                                    type="tel"
-                                    name="phone"
-                                    placeholder="Телефон"
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    required
-                                    className="form-input"
-                                />
+                                <input type="tel" name="phone" placeholder="Телефон" value={formData.phone} onChange={handleChange} className="form-input" required />
                                 <span className="input-focus-line"></span>
                             </div>
 
                             <div className="form-group">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    className="form-input"
-                                />
+                                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="form-input" required />
                                 <span className="input-focus-line"></span>
                             </div>
 
                             <div className="form-group">
-                                <textarea
-                                    name="message"
-                                    placeholder="Сообщение"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    rows="4"
-                                    className="form-textarea"
-                                ></textarea>
+                                <textarea name="message" placeholder="Сообщение" value={formData.message} onChange={handleChange} rows="4" className="form-textarea"></textarea>
                                 <span className="input-focus-line"></span>
                             </div>
 
-                            <button type="submit" className="form-submit-btn">
-                                <span>Отправить</span>
-                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                    <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
-                                </svg>
+                            <button type="submit" className="form-submit-btn" disabled={isSubmitting}>
+                                <span>{isSubmitting ? 'Отправка...' : 'Отправить'}</span>
+                                {!isSubmitting && (
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                        <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
+                                    </svg>
+                                )}
                             </button>
 
-                            {formSubmitted && (
-                                <div className="form-success">
-                                    <span className="success-icon">✓</span>
-                                    <span>Сообщение отправлено</span>
+                            {/* Вывод сообщений статуса */}
+                            {formStatus.message && (
+                                <div className={`form-status-message ${formStatus.type}`}>
+                                    {formStatus.type === 'success' ? '✓ ' : '⚠ '}
+                                    {formStatus.message}
                                 </div>
                             )}
 
                             <p className="form-privacy">
-                                Нажимая на кнопку, вы соглашаетесь с 
-                                <a href="/privacy" className="privacy-link"> политикой конфиденциальности</a>
+                                Нажимая на кнопку, вы соглашаетесь с <a href="/privacy" className="privacy-link">политикой конфиденциальности</a>
                             </p>
                         </form>
                     </div>

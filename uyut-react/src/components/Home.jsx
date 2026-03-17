@@ -1,8 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styles/home.css";
+import { useNavigate, Link } from "react-router-dom";
+import Modal from "./Modal"; // Убедитесь, что файл Modal.jsx лежит в той же папке или укажите верный путь
 
 function Home() {
   const textRef = useRef(null);
+  const navigate = useNavigate();
+  
+  // Состояние для управления модальным окном
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +24,9 @@ function Home() {
 
   return (
     <>
+      {/* Модальное окно (рендерится вне основного потока, когда isModalOpen === true) */}
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
       <div className="hero-wrapper">
         <div className="hero-minimal">
           <div className="hero-content">
@@ -28,7 +37,7 @@ function Home() {
             <p className="hero-subtitle">
               Диваны, стулья, столы — из натурального дерева
             </p>
-            <button className="hero-btn">
+            <button className="hero-btn" onClick={() => navigate("/catalog")}>
               <span>Смотреть каталог</span>
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
@@ -46,7 +55,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Бегущая строка сразу после hero */}
       <div className="marquee">
         <div className="marquee-content">
           <span>· ДИВАНЫ · СТУЛЬЯ · СТОЛЫ · КРОВАТИ · ШКАФЫ · КОМОДЫ ·</span>
@@ -93,7 +101,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Секция: Вертикальная временная шкала */}
       <div className="timeline-wrapper">
         <div className="timeline-header">
           <span className="timeline-label">ПРОЦЕСС</span>
@@ -101,10 +108,8 @@ function Home() {
         </div>
 
         <div className="timeline">
-          {/* Вертикальная линия */}
           <div className="timeline-line"></div>
           
-          {/* Этап 1 */}
           <div className="timeline-item left">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -115,7 +120,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Этап 2 */}
           <div className="timeline-item right">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -126,7 +130,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Этап 3 */}
           <div className="timeline-item left">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -137,7 +140,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Этап 4 */}
           <div className="timeline-item right">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -148,7 +150,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Этап 5 */}
           <div className="timeline-item left">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
@@ -161,7 +162,6 @@ function Home() {
         </div>
       </div>
 
-      {/* Завершающая секция - Призыв к действию */}
       <div className="cta-wrapper">
         <div className="cta-container">
           <div className="cta-content">
@@ -173,33 +173,30 @@ function Home() {
             </p>
             
             <div className="cta-buttons">
-              <button className="cta-btn-primary">
+              {/* <button className="cta-btn-primary" onClick={() => navigate("/catalog")}>
                 <span>Перейти в каталог</span>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
                 </svg>
-              </button>
-              
-              <button className="cta-btn-secondary">
+              </button> */}
+              <button className="cta-btn-secondary" onClick={() => setIsModalOpen(true)}>
                 <span>Связаться с нами</span>
               </button>
             </div>
             
-            {/* Ссылки на основные разделы */}
             <div className="cta-links">
-              <a href="/catalog" className="cta-link">Диваны</a>
+              <Link to="/catalog" className="cta-link">Диваны</Link>
               <span className="cta-link-dot">•</span>
-              <a href="/catalog" className="cta-link">Стулья</a>
+              <Link to="/catalog" className="cta-link">Стулья</Link>
               <span className="cta-link-dot">•</span>
-              <a href="/catalog" className="cta-link">Столы</a>
+              <Link to="/catalog" className="cta-link">Столы</Link>
               <span className="cta-link-dot">•</span>
-              <a href="/catalog" className="cta-link">Кровати</a>
+              <Link to="/catalog" className="cta-link">Кровати</Link>
               <span className="cta-link-dot">•</span>
-              <a href="/catalog" className="cta-link">Шкафы</a>
+              <Link to="/catalog" className="cta-link">Шкафы</Link>
             </div>
           </div>
           
-          {/* Минималистичная декоративная линия */}
           <div className="cta-decoration">
             <div className="cta-line"></div>
             <div className="cta-dots">

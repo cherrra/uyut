@@ -71,11 +71,6 @@ function Header() {
                     <span className="action-icon search-icon"></span>
                     <span className="action-tooltip">Поиск</span>
                 </button>
-                <button className="action-btn cart-btn" aria-label="Корзина">
-                    <span className="action-icon cart-icon"></span>
-                    <span className="cart-badge">0</span>
-                    <span className="action-tooltip">Корзина</span>
-                </button>
             </div>
 
             {/* Кнопка мобильного меню */}
