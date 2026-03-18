@@ -1,7 +1,10 @@
+// Collections.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Добавляем импорт useNavigate
 import "../styles/collections.css";
 
 function Collections() {
+    const navigate = useNavigate(); // Инициализируем navigate
     const [activeCollection, setActiveCollection] = useState(null);
 
     const collections = [
@@ -10,7 +13,7 @@ function Collections() {
             name: "Хюгге",
             description: "Тепло и уют скандинавского дома",
             fullDescription: "Коллекция, вдохновленная датской философией уюта. Мягкие линии, натуральные ткани, приглушенные тона создают атмосферу защищенности и покоя. Каждый предмет дышит спокойствием и приглашает к неторопливым разговорам за чашкой чая.",
-            image: "/images/collection-1.jpg",
+            image: "/images/products/uyut.jpg",
             items: 12,
             color: "Песочный, серый, бежевый",
             materials: "Лен, хлопок, дуб"
@@ -20,7 +23,7 @@ function Collections() {
             name: "Ваби-саби",
             description: "Красота несовершенства",
             fullDescription: "Японская эстетика в каждой детали. Намеренная простота, фактурные поверхности, ручная работа. Предметы этой коллекции несут в себе душу мастера и рассказывают истории о времени и природе материалов.",
-            image: "/images/collection-2.jpg",
+            image: "/images/products/japan.jpg",
             items: 8,
             color: "Природный, терракота, графит",
             materials: "Керамика, состаренный дуб, ротанг"
@@ -30,7 +33,7 @@ function Collections() {
             name: "Минимализм",
             description: "Форма следует функции",
             fullDescription: "Чистота линий и абсолютная функциональность. Ничего лишнего — только то, что действительно нужно. Коллекция для тех, кто ценит порядок и простор, где каждый предмет имеет своё место и значение.",
-            image: "/images/collection-3.jpg",
+            image: "/images/products/min.jpg",
             items: 15,
             color: "Белый, черный, натуральный",
             materials: "Металл, стекло, шпон"
@@ -40,7 +43,7 @@ function Collections() {
             name: "Эко-натураль",
             description: "Возвращение к истокам",
             fullDescription: "Мебель, которая дышит. Только природные материалы, минимум обработки, максимум текстуры. Коллекция создаёт ощущение единения с природой и наполняет дом живой энергией дерева и камня.",
-            image: "/images/collection-4.jpg",
+            image: "/images/products/wood.jpg",
             items: 10,
             color: "Зеленый, древесный, камень",
             materials: "Массив дуба, пробка, камень"
@@ -66,6 +69,11 @@ function Collections() {
         }
     ];
 
+    // Функция для перехода на страницу каталога
+    const handleCatalogClick = () => {
+        navigate("/catalog");
+    };
+
     return (
         <>
             {/* HERO SECTION */}
@@ -89,7 +97,7 @@ function Collections() {
             </section>
 
             {/* FEATURES SECTION */}
-            <section className="features-section">
+            {/* <section className="features-section">
                 <div className="features-header">
                     <span className="features-label">ПРЕИМУЩЕСТВА</span>
                     <h2 className="features-title">Почему выбирают наши коллекции</h2>
@@ -104,7 +112,7 @@ function Collections() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section> */}
 
             {/* COLLECTIONS GRID */}
             <section className="collections-grid-section">
@@ -232,7 +240,7 @@ function Collections() {
                 </div>
             </section>
 
-            {/* CTA SECTION */}
+            {/* CTA SECTION - Обновленная версия без кнопки "Записаться" */}
             <section className="cta-section">
                 <div className="cta-container">
                     <span className="cta-label">ГОТОВЫ ВЫБРАТЬ?</span>
@@ -241,13 +249,10 @@ function Collections() {
                         Приходите в наш шоурум или закажите консультацию дизайнера
                     </p>
                     <div className="cta-buttons">
-                        <button className="cta-btn-primary">
-                            <span>Записаться</span>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" strokeWidth="1.2"/>
-                            </svg>
-                        </button>
-                        <button className="cta-btn-secondary">
+                        <button 
+                            className="cta-btn-secondary"
+                            onClick={handleCatalogClick}
+                        >
                             <span>Смотреть каталог</span>
                         </button>
                     </div>

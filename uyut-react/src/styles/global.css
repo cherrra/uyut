@@ -273,6 +273,105 @@ body::before {
     transform: translateX(-50%) translateY(0);
 }
 
+
+
+/* Стили для поиска в хедере */
+.header-search-wrapper {
+    position: relative;
+}
+
+.header-search {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 300px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.header-search.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.header-search form {
+    display: flex;
+    padding: 10px;
+}
+
+.search-input-header {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px 0 0 6px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-input-header:focus {
+    border-color: #7ec4ae;
+}
+
+.search-submit {
+    padding: 10px 15px;
+    background: #7ec4ae;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    color: #1a332e;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.search-submit:hover {
+    background: #6bb39d;
+}
+
+/* Стили для подсветки поиска в каталоге */
+.search-highlight {
+    background-color: #fff3b0;
+    padding: 2px 0;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+/* Стили для кнопки очистки поиска */
+.search-clear {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    padding: 5px;
+    line-height: 1;
+}
+
+.search-clear:hover {
+    color: #333;
+}
+
+/* Обновленные стили для пустого состояния */
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.empty-state-hint {
+    color: #999;
+    font-size: 14px;
+    margin-top: 10px;
+}
 /* Декоративная линия под хедером */
 .header-decoration {
     position: absolute;
@@ -435,83 +534,234 @@ body::before {
         opacity: 0;
     }
 }
+/* Добавьте эти стили в ваш CSS файл */
 
-/* Мобильная версия */
+/* Мобильная версия - обновленная */
 @media (max-width: 1000px) {
     .header {
-        padding: 20px 30px;
+        padding: 15px 20px;
     }
 
     .header-scrolled {
-        padding: 15px 30px;
+        padding: 10px 20px;
     }
 
+    /* Скрываем поиск на мобильных */
+    .header-search-wrapper {
+        display: none;
+    }
+
+    /* Обновленное бургер-меню */
+    .mobile-menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 24px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1001;
+        position: relative;
+        margin-left: 15px;
+    }
+
+    .mobile-menu-toggle span {
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, #7ec4ae, #8aada6);
+        border-radius: 2px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: left;
+    }
+
+    /* Анимация бургера при открытии */
+    .mobile-menu-toggle.active span:first-child {
+        transform: rotate(45deg) translate(2px, -2px);
+        width: 28px;
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    .mobile-menu-toggle.active span:last-child {
+        transform: rotate(-45deg) translate(2px, 2px);
+        width: 28px;
+    }
+
+    /* Обновленная навигация для мобильных */
     .nav {
         position: fixed;
-        top: 80px;
-        left: 0;
-        width: 100%;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
         background: rgba(252, 249, 245, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
         align-items: center;
-        padding: 30px 20px;
-        gap: 20px;
-        transform: translateY(-150%);
-        opacity: 0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        border-bottom: 1px solid rgba(231, 215, 193, 0.3);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        justify-content: center;
+        padding: 80px 20px;
+        gap: 30px;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border-left: 1px solid rgba(126, 196, 174, 0.2);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
         z-index: 999;
+        opacity: 1;
+        transform: none;
     }
 
     .nav-open {
-        transform: translateY(0);
-        opacity: 1;
+        right: 0;
     }
 
+    /* Стили для ссылок в мобильном меню */
     .nav a {
         margin: 0;
-        font-size: 16px;
+        font-size: 20px;
         width: 100%;
         text-align: center;
+        padding: 15px 25px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateX(30px);
+        animation: slideInLink 0.4s ease forwards;
     }
 
+    /* Анимация появления ссылок */
+.nav-open a:nth-child(1) { animation-delay: 0.1s; }
+.nav-open a:nth-child(2) { animation-delay: 0.15s; }
+.nav-open a:nth-child(3) { animation-delay: 0.2s; }
+.nav-open a:nth-child(4) { animation-delay: 0.25s; }
+.nav-open a:nth-child(5) { animation-delay: 0.3s; }
+
+    @keyframes slideInLink {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Стили для активной ссылки в мобильном меню */
+    .nav a.active {
+        background: linear-gradient(135deg, rgba(126, 196, 174, 0.1), rgba(138, 173, 166, 0.1));
+        border: 1px solid rgba(126, 196, 174, 0.3);
+    }
+
+    .nav a.active .nav-hover-effect {
+        display: none;
+    }
+
+    /* Эффект при наведении на ссылки в мобильном меню */
+    .nav a:hover {
+        background: rgba(126, 196, 174, 0.05);
+        transform: translateY(-2px) scale(1.05);
+    }
+
+    /* Добавляем оверлей при открытом меню */
+    .nav::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100vw;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(58, 44, 36, 0.5);
+        backdrop-filter: blur(3px);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    .nav-open::before {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    /* Декоративные элементы для мобильного меню */
+    .nav::after {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(circle, rgba(126, 196, 174, 0.1), transparent 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+
+    /* Логотип на мобильных */
     .logo {
-        font-size: 24px;
-        letter-spacing: 6px;
+        font-size: 22px;
+        letter-spacing: 4px;
     }
 
-    .header-actions {
-        margin-left: auto;
+    /* Адаптация хедера при открытом меню */
+    .header:has(.nav-open) {
+        background: rgba(252, 249, 245, 0.98);
+    }
+
+    /* Скрываем декоративные элементы на мобильных */
+    .header-decor-1,
+    .header-decor-2,
+    .header-decor-3 {
+        opacity: 0.2;
+        filter: blur(20px);
     }
 
     .action-tooltip {
         display: none;
     }
 
-    .header-decor-3 {
-        display: none;
+    /* Анимация для кнопки бургера */
+    .mobile-menu-toggle {
+        animation: pulse 2s ease-in-out infinite;
     }
 }
 
-/* Адаптивность для планшетов */
-@media (min-width: 769px) and (max-width: 1200px) {
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
     .header {
-        padding: 30px 40px;
+        padding: 12px 15px;
     }
 
-    .header-scrolled {
-        padding: 20px 40px;
+    .logo {
+        font-size: 20px;
+        letter-spacing: 3px;
     }
 
     .nav {
-        gap: 15px;
+        width: 85%;
     }
 
     .nav a {
-        font-size: 13px;
-        padding: 8px 12px;
+        font-size: 18px;
+        padding: 12px 20px;
+    }
+
+    .mobile-menu-toggle {
+        width: 28px;
+        height: 22px;
+    }
+}
+
+/* Для планшетов в ландшафтной ориентации */
+@media (min-width: 769px) and (max-width: 1000px) and (orientation: landscape) {
+    .nav {
+        justify-content: flex-start;
+        padding-top: 60px;
+    }
+
+    .nav a {
+        font-size: 18px;
+        padding: 10px 20px;
     }
 }
 
@@ -587,3 +837,4 @@ body::before {
     border-radius: 50%;
     opacity: 0.4;
 }
+

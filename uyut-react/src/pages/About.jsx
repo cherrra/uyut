@@ -28,7 +28,7 @@ function About() {
             id: 1,
             name: "Хюгге",
             description: "Тепло и уют скандинавского дома",
-            image: "/images/collection-1.jpg",
+            image: "/images/products/uyut.jpg",
             color: "Песочный, серый, бежевый",
             materials: "Лен, хлопок, дуб"
         },
@@ -36,7 +36,7 @@ function About() {
             id: 2,
             name: "Ваби-саби",
             description: "Красота несовершенства",
-            image: "/images/collection-2.jpg",
+            image: "/images/products/japan.jpg",
             color: "Природный, терракота",
             materials: "Состаренный дуб, ротанг"
         },
@@ -44,7 +44,7 @@ function About() {
             id: 3,
             name: "Эко-натураль",
             description: "Возвращение к истокам",
-            image: "/images/collection-3.jpg",
+            image: "/images/products/wood.jpg",
             color: "Зеленый, древесный",
             materials: "Массив дуба, пробка"
         }
@@ -66,6 +66,28 @@ function About() {
         {
             title: "Индивидуальность",
             description: "Возможность кастомизации под ваш интерьер"
+        }
+    ];
+
+    
+    const team = [
+        {
+            name: "Алексей Петров",
+            role: "Основатель, мастер по дереву",
+            image: "/images/men1.jpg",
+            emoji: "👨‍🦰"
+        },
+        {
+            name: "Елена Иванова",
+            role: "Дизайнер интерьеров",
+            image: "/images/women.jpg",
+            emoji: "👩‍🦰"
+        },
+        {
+            name: "Дмитрий Соколов",
+            role: "Мастер по отделке",
+            image: "/images/men.jpg",
+            emoji: "👨‍🦱"
         }
     ];
 
@@ -142,9 +164,17 @@ function About() {
                         
                         <div className="philosophy-image about-animate">
                             <div className="image-frame">
-                                <div className="image-placeholder">
-                                    <span className="placeholder-icon">🪵</span>
-                                </div>
+                                {/* ВСТАВЛЯЕМ КАРТИНКУ ПЕНЬКА */}
+                                <img 
+                                    src="/images/products/phil.jpg" 
+                                    alt="Натуральное дерево - пенек"
+                                    className="philosophy-img"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/images/placeholder.jpg";
+                                        e.target.alt = "Изображение не загрузилось";
+                                    }}
+                                />
                             </div>
                             <div className="image-decor"></div>
                         </div>
@@ -354,8 +384,17 @@ function About() {
                 <div className="showcase-grid">
                     {collections.map((collection, index) => (
                         <div className="showcase-card about-animate" key={collection.id}>
-                            <div className="showcase-image">
-                                <div className="showcase-placeholder"></div>
+                                         <div className="showcase-image">
+                                {/* ВСТАВЛЯЕМ КАРТИНКИ КОЛЛЕКЦИЙ */}
+                                <img 
+                                    src={collection.image}
+                                    alt={collection.name}
+                                    className="showcase-img"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/images/placeholder.jpg";
+                                    }}
+                                />
                                 <div className="showcase-number">0{index + 1}</div>
                             </div>
                             <div className="showcase-content">
@@ -377,7 +416,7 @@ function About() {
                 </div>
             </section>
 
-            {/* TEAM SECTION */}
+              {/* TEAM SECTION */}
             <section className="team-section">
                 <div className="team-header">
                     <span className="team-label">·  КОМАНДА  ·</span>
@@ -385,32 +424,29 @@ function About() {
                 </div>
 
                 <div className="team-grid">
-                    <div className="team-card about-animate">
-                        <div className="team-image">
-                            <div className="team-placeholder">👨‍🦰</div>
+                    {team.map((member, index) => (
+                        <div className="team-card about-animate" key={index}>
+                            <div className="team-image">
+                                {/* ВСТАВЛЯЕМ ФОТОГРАФИИ КОМАНДЫ */}
+                                <img 
+                                    src={member.image}
+                                    alt={member.name}
+                                    className="team-img"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/images/placeholder.jpg";
+                                        // Если изображение не загрузилось, показываем эмодзи
+                                        e.target.style.display = 'none';
+                                        e.target.parentNode.innerHTML += `<div class="team-placeholder">${member.emoji}</div>`;
+                                    }}
+                                />
+                                <div className="team-placeholder" style={{ display: 'none' }}>{member.emoji}</div>
+                            </div>
+                            <h3 className="team-name">{member.name}</h3>
+                            <p className="team-role">{member.role}</p>
+                            <div className="team-line"></div>
                         </div>
-                        <h3 className="team-name">Алексей Петров</h3>
-                        <p className="team-role">Основатель, мастер по дереву</p>
-                        <div className="team-line"></div>
-                    </div>
-
-                    <div className="team-card about-animate">
-                        <div className="team-image">
-                            <div className="team-placeholder">👩‍🦰</div>
-                        </div>
-                        <h3 className="team-name">Елена Иванова</h3>
-                        <p className="team-role">Дизайнер интерьеров</p>
-                        <div className="team-line"></div>
-                    </div>
-
-                    <div className="team-card about-animate">
-                        <div className="team-image">
-                            <div className="team-placeholder">👨‍🦱</div>
-                        </div>
-                        <h3 className="team-name">Дмитрий Соколов</h3>
-                        <p className="team-role">Мастер по отделке</p>
-                        <div className="team-line"></div>
-                    </div>
+                    ))}
                 </div>
             </section>
 
