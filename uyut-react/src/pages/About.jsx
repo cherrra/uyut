@@ -69,7 +69,6 @@ function About() {
         }
     ];
 
-    
     const team = [
         {
             name: "Алексей Петров",
@@ -130,59 +129,7 @@ function About() {
                 </div>
             </section>
 
-            {/* PHILOSOPHY SECTION */}
-            <section className="philosophy-section">
-                <div className="philosophy-container">
-                    <div className="philosophy-grid">
-                        <div className="philosophy-content about-animate">
-                            <span className="philosophy-label">·  НАША ФИЛОСОФИЯ  ·</span>
-                            <h2 className="philosophy-title">Мебель с душой из натурального дерева</h2>
-                            <p className="philosophy-text">
-                                Мы верим, что настоящий уют начинается с природных материалов. 
-                                Каждое изделие создается вручную, сохраняя тепло и энергию дерева.
-                            </p>
-                            <p className="philosophy-text">
-                                Наша мебель — это не просто предметы интерьера, это история, 
-                                которая будет с вами долгие годы, становясь только лучше со временем.
-                            </p>
-                            
-                            <div className="philosophy-stats">
-                                <div className="stat-item">
-                                    <span className="stat-number">8+</span>
-                                    <span className="stat-label">лет опыта</span>
-                                </div>
-                                <div className="stat-item">
-                                    <span className="stat-number">500+</span>
-                                    <span className="stat-label">проектов</span>
-                                </div>
-                                <div className="stat-item">
-                                    <span className="stat-number">100%</span>
-                                    <span className="stat-label">натуральное дерево</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="philosophy-image about-animate">
-                            <div className="image-frame">
-                                {/* ВСТАВЛЯЕМ КАРТИНКУ ПЕНЬКА */}
-                                <img 
-                                    src="/images/products/phil.jpg" 
-                                    alt="Натуральное дерево - пенек"
-                                    className="philosophy-img"
-                                    onError={(e) => {
-                                        e.target.onerror = null;
-                                        e.target.src = "/images/placeholder.jpg";
-                                        e.target.alt = "Изображение не загрузилось";
-                                    }}
-                                />
-                            </div>
-                            <div className="image-decor"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* PROCESS SECTION - УЛУЧШЕННАЯ ВЕРСИЯ */}
+            {/* PROCESS SECTION */}
             <section className="process-creative-section">
                 <div className="process-header">
                     <span className="process-label">·  ПРОЦЕСС  ·</span>
@@ -190,9 +137,8 @@ function About() {
                 </div>
 
                 <div className="process-creative-container">
-                    {/* Основная изогнутая линия (волна) */}
+                    {/* Основная изогнутая линия */}
                     <svg className="process-svg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid meet">
-                        {/* Декоративный фон - текстура дерева */}
                         <defs>
                             <pattern id="woodPattern" patternUnits="userSpaceOnUse" width="100" height="100">
                                 <path d="M0 50 Q 25 40, 50 50 T 100 50" stroke="#7ec4ae" strokeWidth="0.5" fill="none" opacity="0.1"/>
@@ -221,7 +167,7 @@ function About() {
                             className="process-main-line"
                         />
                         
-                        {/* Вторая линия для эффекта толщины (тень) */}
+                        {/* Вторая линия для эффекта толщины */}
                         <path 
                             d="M100,202 
                                C200,122 300,282 400,202 
@@ -234,7 +180,7 @@ function About() {
                             opacity="0.1"
                         />
 
-                        {/* Декоративные листья на изгибах */}
+                        {/* Декоративные листья */}
                         <g className="process-leaf" transform="translate(250,150)">
                             <path d="M0,0 Q10,-15 20,0 Q10,15 0,0" fill="#7ec4ae" opacity="0.3"/>
                         </g>
@@ -246,7 +192,7 @@ function About() {
                         </g>
                     </svg>
 
-                    {/* Точки на линии (узлы) - вынесены отдельно для интерактива */}
+                    {/* Узлы на линии */}
                     <div className="process-nodes">
                         <div 
                             className={`process-node node-1 ${activeStep === 1 ? 'active' : ''}`}
@@ -294,9 +240,8 @@ function About() {
                         </div>
                     </div>
 
-                    {/* Карточки этапов - появляются при наведении на узлы */}
+                    {/* Карточки этапов */}
                     <div className="process-cards">
-                        {/* Шаг 1 - Идея */}
                         <div className={`process-card card-1 ${activeStep === 1 ? 'visible' : ''}`}>
                             <div className="card-content">
                                 <div className="card-icon">💡</div>
@@ -311,7 +256,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Шаг 2 - Материал */}
                         <div className={`process-card card-2 ${activeStep === 2 ? 'visible' : ''}`}>
                             <div className="card-content">
                                 <div className="card-icon">🌲</div>
@@ -326,7 +270,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Шаг 3 - Ручная работа */}
                         <div className={`process-card card-3 ${activeStep === 3 ? 'visible' : ''}`}>
                             <div className="card-content">
                                 <div className="card-icon">🛠️</div>
@@ -341,7 +284,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Шаг 4 - Финишная отделка */}
                         <div className={`process-card card-4 ${activeStep === 4 ? 'visible' : ''}`}>
                             <div className="card-content">
                                 <div className="card-icon">✨</div>
@@ -356,7 +298,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Шаг 5 - Доставка */}
                         <div className={`process-card card-5 ${activeStep === 5 ? 'visible' : ''}`}>
                             <div className="card-content">
                                 <div className="card-icon">🏡</div>
@@ -384,8 +325,7 @@ function About() {
                 <div className="showcase-grid">
                     {collections.map((collection, index) => (
                         <div className="showcase-card about-animate" key={collection.id}>
-                                         <div className="showcase-image">
-                                {/* ВСТАВЛЯЕМ КАРТИНКИ КОЛЛЕКЦИЙ */}
+                            <div className="showcase-image">
                                 <img 
                                     src={collection.image}
                                     alt={collection.name}
@@ -416,7 +356,7 @@ function About() {
                 </div>
             </section>
 
-              {/* TEAM SECTION */}
+            {/* TEAM SECTION */}
             <section className="team-section">
                 <div className="team-header">
                     <span className="team-label">·  КОМАНДА  ·</span>
@@ -427,15 +367,12 @@ function About() {
                     {team.map((member, index) => (
                         <div className="team-card about-animate" key={index}>
                             <div className="team-image">
-                                {/* ВСТАВЛЯЕМ ФОТОГРАФИИ КОМАНДЫ */}
                                 <img 
                                     src={member.image}
                                     alt={member.name}
                                     className="team-img"
                                     onError={(e) => {
                                         e.target.onerror = null;
-                                        e.target.src = "/images/placeholder.jpg";
-                                        // Если изображение не загрузилось, показываем эмодзи
                                         e.target.style.display = 'none';
                                         e.target.parentNode.innerHTML += `<div class="team-placeholder">${member.emoji}</div>`;
                                     }}
@@ -448,22 +385,6 @@ function About() {
                         </div>
                     ))}
                 </div>
-            </section>
-
-            {/* QUOTE SECTION */}
-            <section className="quote-section">
-                <div className="quote-container">
-                    <span className="quote-label">ФИЛОСОФИЯ</span>
-                    <div className="quote-mark">"</div>
-                    <p className="quote-text">
-                        Мебель — это не просто предметы интерьера. 
-                        Это то, что создаёт настроение вашего дома, 
-                        хранит тепло ваших рук и молчаливо сопровождает 
-                        важные моменты жизни.
-                    </p>
-                    <div className="quote-author">— Основатель бренда «Уют»</div>
-                </div>
-                <div className="quote-shape"></div>
             </section>
 
             {/* DECOR ELEMENTS */}

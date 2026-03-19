@@ -1,10 +1,9 @@
-// Collections.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Добавляем импорт useNavigate
+import { useNavigate } from "react-router-dom"; 
 import "../styles/collections.css";
 
 function Collections() {
-    const navigate = useNavigate(); // Инициализируем navigate
+    const navigate = useNavigate(); 
     const [activeCollection, setActiveCollection] = useState(null);
 
     const collections = [
@@ -189,7 +188,6 @@ function Collections() {
                         хранит тепло ваших рук и молчаливо сопровождает 
                         важные моменты жизни.
                     </p>
-                    <div className="quote-author">— Основатель бренда «Уют»</div>
                 </div>
                 <div className="quote-shape"></div>
             </section>

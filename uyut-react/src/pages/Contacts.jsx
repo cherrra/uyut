@@ -1,3 +1,4 @@
+// Contacts.jsx
 import { useEffect, useState } from "react";
 import "../styles/contacts.css";
 
@@ -70,11 +71,11 @@ function Contacts() {
         fetch(SCRIPT_URL, {
             method: 'POST',
             body: payload,
-            mode: 'no-cors' // Важно для Google Apps Script
+            mode: 'no-cors'
         })
         .then(() => {
             setFormStatus({ type: "success", message: "Спасибо! Ваша заявка отправлена." });
-            setFormData({ name: "", phone: "", email: "", message: "" }); // Очистка
+            setFormData({ name: "", phone: "", email: "", message: "" });
         })
         .catch(error => {
             console.error('Error:', error);
@@ -82,35 +83,65 @@ function Contacts() {
         })
         .finally(() => {
             setIsSubmitting(false);
-            // Скрываем сообщение об успехе через 5 секунд
             setTimeout(() => setFormStatus({ type: "", message: "" }), 5000);
         });
     };
 
-    // Данные для рендеринга (остаются без изменений)
+    // Данные для рендеринга (исправленные с учетом Ростова)
     const contacts = [
-        { id: 1, type: "Адрес магазина", value: "г. Москва, ул. Строителей, 15", icon: "📍", details: "ТЦ «Мебельный», 2 этаж" },
-        { id: 2, type: "Телефон", value: "+7 (495) 123-45-67", icon: "📞", details: "Ежедневно с 10:00 до 21:00" },
+        { id: 1, type: "Адрес магазина", value: "г. Ростов-на-Дону, ул. Большая Садовая, 45", icon: "📍", details: "ТЦ «Мебель Град», 1 этаж" },
+        { id: 2, type: "Телефон", value: "+7 (863) 123-45-67", icon: "📞", details: "Ежедневно с 10:00 до 21:00" },
         { id: 3, type: "Email", value: "info@uyut-mebel.ru", icon: "✉️", details: "Ответим в течение 2 часов" }
     ];
 
+    // Улучшенная секция FAQ с ответами для Ростова
     const faq = [
-        { question: "Как добраться до магазина?", answer: "Мы находимся в ТЦ «Мебельный» на 2 этаже..." },
-        { question: "Есть ли доставка?", answer: "Да, доставляем мебель по Москве и области..." },
-        { question: "Можно ли заказать доставку в другой город?", answer: "Да, мы отправляем мебель по всей России..." },
-        { question: "Как происходит оплата?", answer: "Принимаем наличные, банковские карты..." }
+        { 
+            question: "Где находится ваш магазин в Ростове-на-Дону?", 
+            answer: "Наш магазин расположен в центре города по адресу: ул. Большая Садовая, 45, ТЦ «Мебель Град», 1 этаж. Это в 5 минутах ходьбы от Пушкинской улицы и в 10 минутах от Соборной площади." 
+        },
+        { 
+            question: "Есть ли доставка по Ростову и области?", 
+            answer: "Да, мы доставляем мебель по всему Ростову-на-Дону. Стоимость доставки по городу — 500 рублей. В пределах 30 км от города — 1000 рублей. При заказе от 50 000 рублей доставка по городу бесплатно." 
+        },
+        { 
+            question: "Можно ли заказать доставку в другой город?", 
+            answer: "Да, мы отправляем мебель по всей России транспортными компаниями (Деловые Линии, ПЭК, СДЭК). Стоимость рассчитывается индивидуально в зависимости от веса и объема заказа." 
+        },
+        { 
+            question: "Как добраться до магазина на общественном транспорте?", 
+            answer: "До ТЦ «Мебель Град» можно доехать на автобусах №3, 7, 22 до остановки «Большая Садовая». Также рядом находится остановка трамвая №1, 4, 5 «Центральный рынок»." 
+        },
+        { 
+            question: "Есть ли парковка у магазина?", 
+            answer: "Да, у ТЦ «Мебель Град» есть бесплатная парковка для посетителей. Въезд со стороны переулка Семашко." 
+        },
+        { 
+            question: "Какие способы оплаты вы принимаете?", 
+            answer: "Мы принимаем наличные, банковские карты (Visa, Mastercard, МИР), а также безналичный расчет для юридических лиц. Возможна оплата по счету." 
+        }
     ];
 
     return (
         <>
-            {/* HERO SECTION и CONTACT CARDS остаются такими же */}
+            {/* HERO SECTION */}
             <section className="contacts-hero">
                 <div className="contacts-hero-content">
                     <span className="contacts-hero-tag">· КОНТАКТЫ ·</span>
                     <h1 className="contacts-hero-title">Всегда на <span className="contacts-hero-accent">связи</span></h1>
+                    <p className="contacts-hero-subtitle">
+                        Приезжайте в наш магазин в центре Ростова-на-Дону
+                    </p>
+                </div>
+                <div className="contacts-hero-shape"></div>
+                <div className="contacts-hero-decor">
+                    <span className="decor-dot"></span>
+                    <span className="decor-dot"></span>
+                    <span className="decor-dot"></span>
                 </div>
             </section>
 
+            {/* CONTACT CARDS SECTION */}
             <section className="contact-cards-section">
                 <div className="contact-cards-grid">
                     {contacts.map((contact) => (
@@ -119,26 +150,36 @@ function Contacts() {
                             <h3 className="contact-card-title">{contact.type}</h3>
                             <p className="contact-card-value">{contact.value}</p>
                             <p className="contact-card-details">{contact.details}</p>
+                            <div className="contact-card-line"></div>
                         </div>
                     ))}
                 </div>
             </section>
 
+            {/* MAP & FORM SECTION */}
             <section className="map-form-section">
                 <div className="map-form-container">
                     <div className="map-wrapper contacts-animate">
                         <div className="map-placeholder">
-                            {/* Карта iframe */}
+                            {/* Замените XXX на реальный конструктор карты */}
                             <iframe 
                                 src="https://yandex.ru/map-widget/v1/?um=constructor%3AXXX&source=constructor"
-                                width="100%" height="100%" style={{ border: 0 }} loading="lazy" title="Карта"
+                                width="100%" 
+                                height="100%" 
+                                style={{ border: 0 }} 
+                                loading="lazy" 
+                                title="Карта"
+                                className="map-iframe"
                             ></iframe>
                         </div>
                     </div>
 
-                    <div  className="form-wrapper contacts-animate">
+                    <div className="form-wrapper contacts-animate">
                         <span className="form-label">· НАПИШИТЕ НАМ ·</span>
                         <h2 className="form-title">Остались вопросы?</h2>
+                        <p className="form-subtitle">
+                            Заполните форму и мы свяжемся с вами в ближайшее время
+                        </p>
 
                         <form onSubmit={handleSubmit} className="contact-form">
                             <div className="form-group">
@@ -202,12 +243,13 @@ function Contacts() {
                 </div>
             </section>
 
-            {/* FAQ SECTION */}
+            {/* FAQ SECTION - УЛУЧШЕННАЯ */}
             <section className="faq-section">
                 <div className="faq-container">
                     <div className="faq-header">
                         <span className="faq-label">·  ЧАСТЫЕ ВОПРОСЫ  ·</span>
                         <h2 className="faq-title">Ответы на популярные вопросы</h2>
+                        <p className="faq-subtitle">о нашем магазине в Ростове-на-Дону</p>
                     </div>
 
                     <div className="faq-grid">
@@ -229,7 +271,7 @@ function Contacts() {
             <section className="contacts-cta">
                 <div className="cta-container">
                     <span className="cta-label">·  ПРИХОДИТЕ  ·</span>
-                    <h2 className="cta-title">Ждем вас в нашем магазине</h2>
+                    <h2 className="cta-title">Ждем вас в Ростове-на-Дону</h2>
                     <p className="cta-text">
                         Посмотрите мебель вживую, выберите материалы и получите консультацию
                     </p>

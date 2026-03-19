@@ -34,17 +34,6 @@ export const products = [
         discount: 10
     },
     {
-        id: 4,
-        name: "Венский стул классический",
-        category: "chair",
-        price: "9 900",
-        image: "/images/products/chair4.jpg",
-        description: "Классический венский стул из гнутой древесины. Легкий, прочный, элегантный.",
-        isNew: true,
-        isHit: false,
-        discount: null
-    },
-    {
         id: 5,
         name: "Стул с подлокотниками",
         category: "chair",
@@ -158,17 +147,7 @@ export const products = [
         isHit: false,
         discount: null
     },
-    {
-        id: 15,
-        name: "Кресло-качалка",
-        category: "sofa",
-        price: "24 900",
-        image: "/images/products/kreslo.jpg",
-        description: "Уютное кресло-качалка из массива сосны. Мягкое сиденье, удобная спинка.",
-        isNew: false,
-        isHit: true,
-        discount: null
-    },
+
 
     // Кровати (4 шт)
     {

@@ -1,5 +1,4 @@
-/* about.css - добавляем стили для улучшенной секции процесса */
-
+/* about.css - полная версия без дублирования */
 * {
     margin: 0;
     padding: 0;
@@ -259,110 +258,7 @@ body {
     background: #7ec4ae;
 }
 
-/* PHILOSOPHY SECTION */
-.philosophy-section {
-    max-width: 1200px;
-    margin: 100px auto;
-    padding: 0 5%;
-}
-
-.philosophy-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.philosophy-label {
-    font-size: 11px;
-    letter-spacing: 5px;
-    color: #7ec4ae;
-    margin-bottom: 25px;
-    font-weight: 300;
-    text-transform: uppercase;
-    display: inline-block;
-}
-
-.philosophy-title {
-    font-size: 42px;
-    font-weight: 300;
-    color: #1a332e;
-    margin: 20px 0 30px;
-    line-height: 1.2;
-    letter-spacing: -1px;
-}
-
-.philosophy-text {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #5b736b;
-    margin-bottom: 25px;
-    font-weight: 350;
-}
-
-.philosophy-stats {
-    display: flex;
-    gap: 40px;
-    margin-top: 40px;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-number {
-    font-size: 36px;
-    font-weight: 300;
-    color: #7ec4ae;
-    letter-spacing: -1px;
-    line-height: 1;
-}
-
-.stat-label {
-    font-size: 12px;
-    letter-spacing: 1px;
-    color: #7b8f88;
-    text-transform: uppercase;
-    margin-top: 8px;
-    font-weight: 300;
-}
-
-.philosophy-image {
-    position: relative;
-}
-
-.image-frame {
-    position: relative;
-    padding: 20px;
-    background: #faf9f7;
-    border-radius: 30px;
-    border: 1px solid rgba(126, 196, 174, 0.15);
-}
-
-.image-placeholder {
-    aspect-ratio: 4/5;
-    background: linear-gradient(145deg, #e3d9d2, #d6ccc4);
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 64px;
-    color: #7ec4ae;
-}
-
-.image-decor {
-    position: absolute;
-    top: -15px;
-    right: -15px;
-    width: 100px;
-    height: 100px;
-    background: radial-gradient(circle, rgba(126, 196, 174, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    z-index: -1;
-}
-
-/* PROCESS CREATIVE SECTION - УЛУЧШЕННАЯ ВЕРСИЯ */
+/* PROCESS CREATIVE SECTION */
 .process-creative-section {
     max-width: 1400px;
     margin: 120px auto;
@@ -419,7 +315,7 @@ body {
     animation: leafFloat 4s ease-in-out infinite;
 }
 
-/* Узлы на линии (интерактивные точки) */
+/* Узлы на линии */
 .process-nodes {
     position: absolute;
     top: 0;
@@ -533,7 +429,6 @@ body {
     transform: translateY(0) scale(1);
 }
 
-/* Позиционирование карточек относительно узлов */
 .card-1 {
     top: 5%;
     left: 5%;
@@ -672,22 +567,10 @@ body {
 
 .showcase-image {
     position: relative;
-    height: 200px;
-    background: #f5f2ef;
+    height: 280px;
     overflow: hidden;
+    background: #f5f2ef;
 }
-
-.showcase-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #e3d9d2, #d6ccc4);
-    transition: transform 0.6s ease;
-}
-
-.showcase-card:hover .showcase-placeholder {
-    transform: scale(1.05);
-}
-
 
 .showcase-img {
     width: 100%;
@@ -701,17 +584,6 @@ body {
     transform: scale(1.05);
 }
 
-.showcase-image {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-    height: 280px;
-}
-
-.showcase-placeholder {
-    display: none; /* Скрываем старый плейсхолдер */
-}
-
 .showcase-number {
     position: absolute;
     top: 15px;
@@ -723,6 +595,7 @@ body {
     background: rgba(255,255,255,0.9);
     padding: 4px 12px;
     border-radius: 30px;
+    z-index: 2;
 }
 
 .showcase-content {
@@ -834,6 +707,12 @@ body {
     transform: translateY(0);
 }
 
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px -20px rgba(126, 196, 174, 0.3);
+    border-color: rgba(126, 196, 174, 0.3);
+}
+
 .team-image {
     position: relative;
     width: 200px;
@@ -868,34 +747,6 @@ body {
     color: #7ec4ae;
 }
 
-/* .team-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 45px -20px rgba(126, 196, 174, 0.4);
-    border-color: rgba(126, 196, 174, 0.4);
-} */
-
-
-/* .team-image {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 25px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 3px solid #7ec4ae;
-    padding: 5px;
-}
-
-.team-placeholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: linear-gradient(145deg, #e3d9d2, #d6ccc4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 60px;
-} */
-
 .team-name {
     font-size: 22px;
     font-weight: 400;
@@ -928,8 +779,6 @@ body {
     background: #7ec4ae;
     opacity: 1;
 }
-
-
 
 /* QUOTE SECTION */
 .quote-section {
@@ -970,7 +819,6 @@ body {
     font-weight: 300;
     text-transform: uppercase;
     display: inline-block;
-    position: relative;
 }
 
 .quote-mark {
@@ -1127,15 +975,6 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .philosophy-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .philosophy-title {
-        font-size: 36px;
-    }
-
     .process-title {
         font-size: 36px;
     }
@@ -1196,10 +1035,6 @@ body {
         font-size: 22px;
     }
 
-    .philosophy-stats {
-        justify-content: space-around;
-    }
-
     .process-cards {
         grid-template-columns: 1fr;
     }
@@ -1237,15 +1072,6 @@ body {
         font-size: 32px;
     }
 
-    .philosophy-title {
-        font-size: 32px;
-    }
-
-    .philosophy-stats {
-        flex-direction: column;
-        gap: 20px;
-    }
-
     .process-title {
         font-size: 32px;
     }
@@ -1269,6 +1095,11 @@ body {
     .quote-text {
         font-size: 20px;
     }
+
+    .team-image {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1281,10 +1112,6 @@ body {
     }
 
     .features-title {
-        font-size: 28px;
-    }
-
-    .philosophy-title {
         font-size: 28px;
     }
 

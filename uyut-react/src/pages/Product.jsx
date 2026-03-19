@@ -1,3 +1,4 @@
+// Product.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { products } from "../data/products";
@@ -7,7 +8,6 @@ function Product() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
-    const [selectedImage, setSelectedImage] = useState(0);
     const [activeTab, setActiveTab] = useState("description");
 
     // Похожие товары
@@ -30,7 +30,6 @@ function Product() {
         }
         
         // Сброс состояния при смене товара
-        setSelectedImage(0);
         setActiveTab("description");
         
         // Скролл наверх при открытии
@@ -109,14 +108,6 @@ function Product() {
         return specs[product?.category] || [];
     };
 
-    // Создаем массив из 4 одинаковых изображений (для галереи)
-    const productImages = product ? [
-        product.image,
-        product.image,
-        product.image,
-        product.image
-    ] : [];
-
     if (!product) {
         return (
             <div className="product-loading">
@@ -138,149 +129,151 @@ function Product() {
             </div>
 
             <div className="product-main container">
-                <div className="product-gallery">
+                {/* Изображение товара */}
+                <div className="product-image-section">
                     <div className="product-main-image">
-                        <img src={productImages[selectedImage]} alt={product.name} />
+                        <img src={product.image} alt={product.name} />
                         {product.isNew && <span className="product-badge product-badge-new">Новинка</span>}
                         {product.isHit && <span className="product-badge product-badge-hit">Хит</span>}
                         {product.discount && <span className="product-badge product-badge-discount">-{product.discount}%</span>}
                     </div>
-                    <div className="product-thumbnails">
-                        {productImages.map((img, index) => (
-                            <div 
-                                key={index} 
-                                className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
-                                onClick={() => setSelectedImage(index)}
-                            >
-                                <img src={img} alt={`${product.name} - вид ${index + 1}`} />
-                            </div>
-                        ))}
-                    </div>
                 </div>
 
-                <div className="product-info">
-                    <span className="product-category-label">
-                        {product.category === "chair" ? "Стулья" : 
-                         product.category === "table" ? "Столы" :
-                         product.category === "sofa" ? "Диваны" :
-                         product.category === "bed" ? "Кровати" :
-                         product.category === "wardrobe" ? "Шкафы" : "Полки"}
+                <div className="product-info-section">
+                    <span className="product-category">
+                        {product.category === "chair" ? "Стул" : 
+                         product.category === "table" ? "Стол" :
+                         product.category === "sofa" ? "Диван" :
+                         product.category === "bed" ? "Кровать" :
+                         product.category === "wardrobe" ? "Шкаф" : "Полка"}
                     </span>
-                    <h1 className="product-title-large">{product.name}</h1>
+                    <h1 className="product-name">{product.name}</h1>
                     
-                    <div className="product-rating">
-                        <div className="stars">★★★★★</div>
-                        <span className="rating-count">12 отзывов</span>
-                    </div>
-
                     <div className="product-price-large">{product.price} ₽</div>
 
-                    <p className="product-short-desc">{description}</p>
+                    <p className="product-description-large">{description}</p>
 
-                    <div className="product-specs-mini">
-                        <div className="spec-item">
-                            <span className="spec-label">Материал:</span>
-                            <span className="spec-value">Массив дерева</span>
+                    <div className="product-features">
+                        <div className="feature-item">
+                            <span className="feature-label">Материал:</span>
+                            <span className="feature-value">Массив дерева</span>
                         </div>
-                        <div className="spec-item">
-                            <span className="spec-label">Производство:</span>
-                            <span className="spec-value">Россия</span>
+                        <div className="feature-item">
+                            <span className="feature-label">Производство:</span>
+                            <span className="feature-value">Россия</span>
                         </div>
-                        <div className="spec-item">
-                            <span className="spec-label">Гарантия:</span>
-                            <span className="spec-value">24 мес.</span>
+                        <div className="feature-item">
+                            <span className="feature-label">Наличие:</span>
+                            <span className="feature-value in-stock">В наличии</span>
                         </div>
                     </div>
 
-                    <div className="product-meta">
-                        <div className="meta-item">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <circle cx="8" cy="8" r="6" stroke="#7ec4ae" strokeWidth="1.2"/>
-                                <path d="M8 4V8L10 10" stroke="#7ec4ae" strokeWidth="1.2"/>
+                    <div className="product-delivery">
+                        <div className="delivery-item">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <circle cx="9" cy="9" r="7" stroke="#7ec4ae" strokeWidth="1.2"/>
+                                <path d="M9 5V9L11 11" stroke="#7ec4ae" strokeWidth="1.2"/>
                             </svg>
-                            <span>Готовность: <strong>в наличии</strong></span>
+                            <span>Доставка: <strong>1-3 дня</strong></span>
                         </div>
-                        <div className="meta-item">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M2 5L8 2L14 5L8 8L2 5Z" stroke="#7ec4ae" strokeWidth="1.2"/>
-                                <path d="M2 8L8 11L14 8" stroke="#7ec4ae" strokeWidth="1.2"/>
+                        <div className="delivery-item">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M3 6L9 3L15 6L9 9L3 6Z" stroke="#7ec4ae" strokeWidth="1.2"/>
+                                <path d="M3 9L9 12L15 9" stroke="#7ec4ae" strokeWidth="1.2"/>
                             </svg>
-                            <span>Доставка: <strong>от 2 дней</strong></span>
+                            <span>Самовывоз: <strong>сегодня</strong></span>
                         </div>
                     </div>
                 </div>
             </div>
 
+            {/* Вкладки */}
             <div className="product-tabs container">
                 <div className="tabs-header">
-                    <button className={activeTab === 'description' ? 'active' : ''} onClick={() => setActiveTab('description')}>Описание</button>
-                    <button className={activeTab === 'specifications' ? 'active' : ''} onClick={() => setActiveTab('specifications')}>Характеристики</button>
-                    <button className={activeTab === 'delivery' ? 'active' : ''} onClick={() => setActiveTab('delivery')}>Доставка и оплата</button>
-                    <button className={activeTab === 'reviews' ? 'active' : ''} onClick={() => setActiveTab('reviews')}>Отзывы (12)</button>
+                    <button 
+                        className={activeTab === 'description' ? 'active' : ''} 
+                        onClick={() => setActiveTab('description')}
+                    >
+                        Описание
+                    </button>
+                    <button 
+                        className={activeTab === 'specifications' ? 'active' : ''} 
+                        onClick={() => setActiveTab('specifications')}
+                    >
+                        Характеристики
+                    </button>
+                    <button 
+                        className={activeTab === 'delivery' ? 'active' : ''} 
+                        onClick={() => setActiveTab('delivery')}
+                    >
+                        Доставка и оплата
+                    </button>
                 </div>
 
                 <div className="tabs-content">
                     {activeTab === 'description' && (
-                        <div className="tab-pane description-tab">
-                            <div className="description-text">
-                                <p>{description}</p>
-                                <p>Каждое изделие проходит тщательный контроль качества. Натуральное дерево делает каждое изделие уникальным.</p>
-                            </div>
+                        <div className="tab-pane">
+                            <p className="tab-text">{description}</p>
+                            <p className="tab-text">
+                                Каждое изделие изготавливается вручную из отборного массива дерева. 
+                                Мы используем только натуральные масла для покрытия, которые подчеркивают 
+                                текстуру древесины и делают ее более устойчивой к внешним воздействиям.
+                            </p>
                         </div>
                     )}
 
                     {activeTab === 'specifications' && (
-                        <div className="tab-pane specifications-tab">
-                            <table className="specs-table">
-                                <tbody>
-                                    {specifications.map((spec, index) => (
-                                        <tr key={index}>
-                                            <td>{spec.name}</td>
-                                            <td>{spec.value}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                        <div className="tab-pane">
+                            <div className="specs-list">
+                                {specifications.map((spec, index) => (
+                                    <div className="spec-row" key={index}>
+                                        <span className="spec-name">{spec.name}</span>
+                                        <span className="spec-dots"></span>
+                                        <span className="spec-value">{spec.value}</span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
                     {activeTab === 'delivery' && (
-                        <div className="tab-pane delivery-tab">
-                            <h3>Способы доставки</h3>
-                            <ul>
-                                <li>Курьером по Москве — 500 ₽</li>
-                                <li>Самовывоз — бесплатно</li>
-                            </ul>
-                        </div>
-                    )}
-
-                    {activeTab === 'reviews' && (
-                        <div className="tab-pane reviews-tab">
-                            <div className="review">
-                                <div className="review-header">
-                                    <span className="review-author">Анна</span>
-                                    <span className="review-date">12 марта 2026</span>
-                                </div>
-                                <div className="review-rating">★★★★★</div>
-                                <p className="review-text">Отличное качество сборки, дерево очень красивое!</p>
+                        <div className="tab-pane">
+                            <div className="delivery-info">
+                                <h3 className="delivery-subtitle">Доставка по Ростову</h3>
+                                <p className="delivery-text">
+                                    Доставка курьером — 500 ₽ (1-2 рабочих дня)
+                                </p>
+                                <p className="delivery-text">
+                                    Самовывоз из магазина — бесплатно (сегодня)
+                                </p>
+                                
+                                <h3 className="delivery-subtitle">Доставка по России</h3>
+                                <p className="delivery-text">
+                                    Отправляем транспортными компаниями. Стоимость рассчитывается индивидуально.
+                                </p>
+                                
+                                <h3 className="delivery-subtitle">Оплата</h3>
+                                <p className="delivery-text">
+                                    Наличными при получении, банковской картой на сайте или по счету для юрлиц.
+                                </p>
                             </div>
-                            <button className="review-btn">Оставить отзыв</button>
                         </div>
                     )}
                 </div>
             </div>
 
+            {/* Похожие товары */}
             {relatedProducts.length > 0 && (
                 <div className="related-products container">
                     <h2 className="related-title">Похожие товары</h2>
                     <div className="related-grid">
                         {relatedProducts.map(p => (
                             <div className="related-card" key={p.id} onClick={() => navigate(`/product/${p.id}`)}>
-                                <div className="related-img-wrapper">
+                                <div className="related-image">
                                     <img src={p.image} alt={p.name} />
                                 </div>
                                 <div className="related-info">
-                                    <h3>{p.name}</h3>
+                                    <h3 className="related-name">{p.name}</h3>
                                     <span className="related-price">{p.price} ₽</span>
                                 </div>
                             </div>
